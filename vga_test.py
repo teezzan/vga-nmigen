@@ -15,16 +15,15 @@ class VGA_test(Elaboratable):
         self.y   = Signal()
         self.vsync   = Signal()
         self.hsync  = Signal()
-    def elaborate(self):
+    def elaborate(self, platform):
         m = Module()
         vga_tem = VGA_sync()
         m.submodules += vga_tem        
         vga = platform.request("vga")
         m.d.comb += [
-            vga.vsync_n.eq(~vga_tem.vsync),
-            vga.hsync_n.eq(~vga_tem.hsync)]
+            vga.vs.eq(~vga_tem.vsync),
+            vga.hs.eq(~vga_tem.hsync)]
         with m.If(vga_tem.tv_out):
-
             m.d.comb += [
                 vga.r.eq(7),
                 vga.g.eq(7),
