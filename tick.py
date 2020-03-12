@@ -28,7 +28,6 @@ class Tick(Elaboratable):
 
 
 if __name__ == "__main__":
-#     from nmigen.back import verilog
     tick= Tick(sys_clk_freq = int(50), period = 1)
     ports= [tick.ce, tick.enable]
     main(tick, ports=ports)
