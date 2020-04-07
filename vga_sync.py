@@ -42,16 +42,14 @@ class VGA_sync(Elaboratable):
                 m.d.sync +=  hsync_count.eq(hsync_count+1)
 
         with m.If((hsync_count >= (HB + HD)) & (hsync_count <= (HB + HD + HR - 1))):
-            m.d.comb +=  self.hsync.eq(1)
-        with m.Else():
             m.d.comb +=  self.hsync.eq(0)
+        with m.Else():
+            m.d.comb +=  self.hsync.eq(1)
 
         with m.If((vsync_count >= (VB + VD)) & (vsync_count <= (VB + VD + VR - 1))):
-            m.d.comb +=  self.vsync.eq(1)            
+            m.d.comb +=  self.vsync.eq(0)            
         with m.Else():
-            m.d.comb +=  self.vsync.eq(0)
-
-        
+            m.d.comb +=  self.vsync.eq(1)
 
         m.d.comb += [
             self.x.eq(hsync_count),
